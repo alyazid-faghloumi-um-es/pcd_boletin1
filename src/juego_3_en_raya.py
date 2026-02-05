@@ -86,3 +86,25 @@ def test_movimiento_incorrecto(tablero_dimension, movimientos_ocupados):
     x = 2
     y = 3
     assert not movimiento_valido(tablero_dimension, x, y, movimientos_ocupados)
+
+def jugada_ganadora(movimientos_jugador):
+    #Comprobamos si hay 3 fichas en una fila
+    for fila in movimientos_jugador:
+        movimientos_columna = movimientos_jugador[fila]
+        if len(movimientos_columna)==3:
+            return True
+    return False
+
+@pytest.fixture
+def movimientos_no_ganador():
+    return {2: [2, 3]}
+
+@pytest.fixture
+def movimientos_ganador():
+    return {2: [1, 2, 3]}
+
+def test_no_ganador(movimientos_no_ganador):
+    assert not jugada_ganadora(movimientos_no_ganador)
+
+def test_ganador(movimientos_ganador):
+    assert jugada_ganadora(movimientos_ganador)
